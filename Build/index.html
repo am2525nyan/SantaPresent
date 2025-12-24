@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="John Appleseed" />
+    <meta name="generator" content="Ignite v0.6.0" />
+    <title>サンタさんへの手紙 – My Awesome Site</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="/css/ignite-core.min.css" rel="stylesheet" />
+    <link href="https://www.example.com/" rel="canonical" />
+    <script>(function() {
+    function getThemePreference() {
+        return localStorage.getItem('custom-theme') || 'auto';
+    }
+
+    function applyTheme(themeID) {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const lightThemeID = document.documentElement.getAttribute('data-light-theme') || 'light';
+        const darkThemeID = document.documentElement.getAttribute('data-dark-theme') || 'dark';
+        const actualThemeID = themeID === 'auto' ? (prefersDark ? darkThemeID : lightThemeID) : themeID;
+
+        document.documentElement.setAttribute('data-bs-theme', actualThemeID);
+        document.documentElement.setAttribute('data-theme-state', themeID);
+    }
+
+    function applySyntaxTheme() {
+        const syntaxTheme = getComputedStyle(document.documentElement)
+            .getPropertyValue('--syntax-highlight-theme').trim().replace(/"/g, '');
+
+        if (!syntaxTheme) return;
+
+        document.querySelectorAll('link[data-highlight-theme]').forEach(link => {
+            link.setAttribute('disabled', 'disabled');
+        });
+
+        const themeLink = document.querySelector(`link[data-highlight-theme="${syntaxTheme}"]`);
+        if (themeLink) {
+            themeLink.removeAttribute('disabled');
+        }
+    }
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        const currentTheme = getThemePreference();
+        if (currentTheme === 'auto') {
+            applyTheme('auto');
+            applySyntaxTheme();
+        }
+    });
+
+    const savedTheme = getThemePreference();
+    applyTheme(savedTheme);
+    applySyntaxTheme();
+})();
+</script>
+    <meta property="og:site_name" content="Hello World" />
+    <meta property="og:title" content="サンタさんへの手紙" />
+    <meta name="twitter:title" content="サンタさんへの手紙" />
+    <meta property="og:url" content="https://www.example.com/" />
+    <meta name="twitter:domain" content="example.com" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:dnt" content="on" />
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&amp;family=Yusei+Magic&amp;display=swap" rel="stylesheet" />
+    <link href="/css/santa-letter.css" rel="stylesheet" />
+  </head>
+  <body class="container">
+    <div class="ig-main-content">
+      <div class="letter-container" style="padding-top: 40px; padding-bottom: 40px; padding-left: 80px; padding-right: 80px; background-color: white; width: 100%; max-width: 1000px; border-radius: 15px; box-shadow: rgb(0 0 0 / 30%) 0px 10px 25px ; border-top: 10.0px solid rgb(22 91 51 / 100%); border-bottom: 10.0px solid rgb(22 91 51 / 100%)">
+        <h2 class="decoration text-center" style="margin-bottom: 10px">🎄 ✨ 🎁</h2>
+        <p class="text-center" style="font-weight: 400; font-family: 'Yusei Magic'; font-size: 40px; color: rgb(212 36 38 / 100%); margin-bottom: 30px">Dear Santa</p>
+        <form id="SvSWq" class="row g-4" onsubmit="    event.preventDefault();
+    const name = document.getElementById(\'name\').value;
+    const present = document.getElementById(\'present\').value;
+
+    fetch(\'https://santa-present-f395b2e91f52.herokuapp.com/gifts\', {
+        method: \'POST\',
+        headers: { \'Content-Type\': \'application/json\' },
+        body: JSON.stringify({ name, present })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(\'サンタさんに手紙を送りました！届くといいね！\');
+        document.getElementById(\'name\').value = \'\';
+        document.getElementById(\'present\').value = \'\';
+    })
+    .catch(error => {
+        alert(\'送信に失敗しました。もう一度試してください。\');
+        console.error(\'Error:\', error);
+    });">
+          <div class="col-auto">
+            <div class="form-floating">
+              <input id="name" type="text" required class="form-control form-control-sm" />
+              <label for="name" class="col-form-label-sm">あなたのおなまえ</label>
+            </div>
+          </div>
+          <div class="col-auto">
+            <div class="form-floating">
+              <input id="present" type="text" required class="form-control form-control-sm" />
+              <label for="present" class="col-form-label-sm">おねがいしたいプレゼント</label>
+            </div>
+          </div>
+          <div class="col-auto d-flex align-items-stretch">
+            <button type="submit" class="send-btn w-100 btn">サンタさんに送る</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/ignite-core.js"></script>
+  </body>
+</html>

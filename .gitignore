@@ -2,7 +2,6 @@
 .DS_Store
 
 # ビルド成果物
-Build
 .build
 Packages
 DerivedData/
