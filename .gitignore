@@ -1,0 +1,24 @@
+# macOS
+.DS_Store
+
+# ビルド成果物
+Build
+.build
+Packages
+DerivedData/
+
+# Xcode
+xcuserdata/
+.swiftpm/configuration/registries.json
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+
+# 機密情報（GitHub公開時に除外）
+Sources/Config.swift
+.netrc
+
+# 環境変数
+.env
+.env.local
+
+# Claude Code
+.claude

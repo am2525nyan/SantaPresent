@@ -1,0 +1,39 @@
+body {
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    background: linear-gradient(to bottom, #696EFF, #F8ACFF);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.letter-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.send-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #D42426 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 50px !important;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.send-btn:hover {
+    background-color: #b21f1f !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.send-btn:active {
+    transform: translateY(0);
+}

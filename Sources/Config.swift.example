@@ -1,0 +1,12 @@
+import Foundation
+
+/// アプリケーションの設定
+/// ⚠️ このファイルをコピーして Config.swift を作成し、実際のURLを設定してください
+struct Config {
+    /// バックエンドAPIのベースURL
+    /// 例: "https://your-app-name.herokuapp.com"
+    static let apiBaseURL = "YOUR_API_BASE_URL_HERE"
+
+    /// ギフト作成エンドポイント
+    static let giftsEndpoint = "\(apiBaseURL)/gifts"
+}
