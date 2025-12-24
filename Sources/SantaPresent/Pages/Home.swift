@@ -12,11 +12,17 @@ struct Home: StaticPage {
                 .font(.title2)
                 .horizontalAlignment(.center)
                 .margin(.bottom, 10)
-            
+
             // タイトル
             Text("Dear Santa")
                 .font(.custom("Yusei Magic",size: 40))
                 .foregroundStyle(Color(hex: "#D42426"))
+                .horizontalAlignment(.center)
+                .margin(.bottom, 20)
+
+            // ギフトリストへのリンク
+            Link("🎁 みんなのお願いを見る", target: "/gift-list")
+                .class("gift-list-link")
                 .horizontalAlignment(.center)
                 .margin(.bottom, 30)
             

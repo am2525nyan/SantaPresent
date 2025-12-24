@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="John Appleseed" />
     <meta name="generator" content="Ignite v0.6.0" />
-    <title>サンタさんへの手紙 – My Awesome Site</title>
+    <title>みんなのお願い – My Awesome Site</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/css/bootstrap-icons.min.css" rel="stylesheet" />
     <link href="/css/ignite-core.min.css" rel="stylesheet" />
-    <link href="https://www.example.com/" rel="canonical" />
+    <link href="https://www.example.com/gift-list" rel="canonical" />
     <script>(function() {
     function getThemePreference() {
         return localStorage.getItem('custom-theme') || 'auto';
@@ -55,9 +55,9 @@
 })();
 </script>
     <meta property="og:site_name" content="Hello World" />
-    <meta property="og:title" content="サンタさんへの手紙" />
-    <meta name="twitter:title" content="サンタさんへの手紙" />
-    <meta property="og:url" content="https://www.example.com/" />
+    <meta property="og:title" content="みんなのお願い" />
+    <meta name="twitter:title" content="みんなのお願い" />
+    <meta property="og:url" content="https://www.example.com/gift-list" />
     <meta name="twitter:domain" content="example.com" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:dnt" content="on" />
@@ -68,49 +68,32 @@
     <div class="ig-main-content">
       <div class="letter-container" style="padding-top: 40px; padding-bottom: 40px; padding-left: 80px; padding-right: 80px; background-color: white; width: 100%; max-width: 1000px; border-radius: 15px; box-shadow: rgb(0 0 0 / 30%) 0px 10px 25px ; border-top: 10.0px solid rgb(22 91 51 / 100%); border-bottom: 10.0px solid rgb(22 91 51 / 100%)">
         <h2 class="decoration text-center" style="margin-bottom: 10px">🎄 ✨ 🎁</h2>
-        <p class="text-center" style="font-weight: 400; font-family: 'Yusei Magic'; font-size: 40px; color: rgb(212 36 38 / 100%); margin-bottom: 20px">Dear Santa</p>
-        <a href="/gift-list" class="gift-list-link text-center" style="display: block; margin-bottom: 30px">🎁 みんなのお願いを見る</a>
-        <form id="WCgTO" class="row g-4" onsubmit="    event.preventDefault();
-
-    // フォームデータを取得
-    const name = document.getElementById(\'name\').value;
-    const present = document.getElementById(\'present\').value;
-
-    // バックエンドAPIにPOSTリクエストを送信
-    fetch(\'https://santa-present-f395b2e91f52.herokuapp.com/gifts\', {
-        method: \'POST\',
-        headers: { \'Content-Type\': \'application/json\' },
-        body: JSON.stringify({ name, present })
-    })
+        <p class="text-center" style="font-weight: 400; font-family: 'Yusei Magic'; font-size: 40px; color: rgb(212 36 38 / 100%); margin-bottom: 30px">みんなのお願い</p>
+        <a href="/" class="back-list-link text-center" style="display: block; margin-bottom: 20px">✉️ 手紙を書く</a>
+        <p id="gift-list" class="text-center gift-list-container">読み込み中...</p>
+        <script>fetch('https://santa-present-f395b2e91f52.herokuapp.com/gifts')
     .then(response => response.json())
-    .then(data => {
-        // 成功時の処理
-        alert(\'サンタさんに手紙を送りました！届くといいね！\');
-        // フォームをクリア
-        document.getElementById(\'name\').value = \'\';
-        document.getElementById(\'present\').value = \'\';
+    .then(gifts => {
+        const container = document.getElementById('gift-list');
+
+        if (gifts.length === 0) {
+            container.innerHTML = '<p class="no-gifts">まだお願いがありません</p>';
+            return;
+        }
+
+        // ギフトカードを作成
+        container.innerHTML = gifts.map(gift => `
+            <div class="gift-card">
+                <div class="gift-name">🎅 ${gift.name}さん</div>
+                <div class="gift-present">🎁 ${gift.present}</div>
+            </div>
+        `).join('');
     })
     .catch(error => {
-        // エラー時の処理
-        alert(\'送信に失敗しました。もう一度試してください。\');
-        console.error(\'Error:\', error);
-    });">
-          <div class="col-auto">
-            <div class="form-floating">
-              <input id="name" type="text" required class="form-control form-control-sm" />
-              <label for="name" class="col-form-label-sm">あなたのおなまえ</label>
-            </div>
-          </div>
-          <div class="col-auto">
-            <div class="form-floating">
-              <input id="present" type="text" required class="form-control form-control-sm" />
-              <label for="present" class="col-form-label-sm">おねがいしたいプレゼント</label>
-            </div>
-          </div>
-          <div class="col-auto d-flex align-items-stretch">
-            <button type="submit" class="send-btn w-100 btn">サンタさんに送る</button>
-          </div>
-        </form>
+        console.error('Error:', error);
+        document.getElementById('gift-list').innerHTML =
+            '<p class="error-message">お願いの読み込みに失敗しました</p>';
+    });</script>
       </div>
     </div>
     <script src="/js/bootstrap.bundle.min.js"></script>

@@ -14,7 +14,7 @@ struct IgniteWebsite {
     }
 }
 
-struct ExampleSite: Site {    
+struct ExampleSite: Site {
     var name = "Hello World"
     var titleSuffix = " – My Awesome Site"
     var url = URL(static: "https://www.example.com")
@@ -23,5 +23,8 @@ struct ExampleSite: Site {
     var author = "John Appleseed"
 
     var homePage = Home()
+    var staticPages: [any StaticPage] {
+        GiftList()
+    }
     var layout = MainLayout()
 }
