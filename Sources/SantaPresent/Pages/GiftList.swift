@@ -51,8 +51,19 @@ struct GiftList: StaticPage {
     // ギフトリストを取得して表示するJavaScript
     private func loadGiftsScript() -> String {
         """
-        fetch('\(Config.giftsEndpoint)')
-            .then(response => response.json())
+        fetch('\(Config.giftsEndpoint)', {
+            mode: 'cors',
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(gifts => {
                 const container = document.getElementById('gift-list');
 
@@ -70,9 +81,12 @@ struct GiftList: StaticPage {
                 `).join('');
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error('Error details:', error);
+                const errorMsg = error.message.includes('CORS') || error.message.includes('NetworkError') || error.message === 'Failed to fetch'
+                    ? 'お願いの読み込みに失敗しました（サーバー設定エラー）'
+                    : `お願いの読み込みに失敗しました: ${error.message}`;
                 document.getElementById('gift-list').innerHTML =
-                    '<p class="error-message">お願いの読み込みに失敗しました</p>';
+                    `<p class="error-message">${errorMsg}</p>`;
             });
         """
     }

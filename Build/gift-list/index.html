@@ -71,8 +71,19 @@
         <p class="text-center" style="font-weight: 400; font-family: 'Yusei Magic'; font-size: 40px; color: rgb(212 36 38 / 100%); margin-bottom: 30px">みんなのお願い</p>
         <a href="/" class="back-list-link text-center" style="display: block; margin-bottom: 20px">✉️ 手紙を書く</a>
         <p id="gift-list" class="text-center gift-list-container">読み込み中...</p>
-        <script>fetch('https://santa-present-f395b2e91f52.herokuapp.com/gifts')
-    .then(response => response.json())
+        <script>fetch('https://santa-present-f395b2e91f52.herokuapp.com/gifts', {
+    mode: 'cors',
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json'
+    }
+})
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
     .then(gifts => {
         const container = document.getElementById('gift-list');
 
@@ -90,9 +101,12 @@
         `).join('');
     })
     .catch(error => {
-        console.error('Error:', error);
+        console.error('Error details:', error);
+        const errorMsg = error.message.includes('CORS') || error.message.includes('NetworkError') || error.message === 'Failed to fetch'
+            ? 'お願いの読み込みに失敗しました（サーバー設定エラー）'
+            : `お願いの読み込みに失敗しました: ${error.message}`;
         document.getElementById('gift-list').innerHTML =
-            '<p class="error-message">お願いの読み込みに失敗しました</p>';
+            `<p class="error-message">${errorMsg}</p>`;
     });</script>
       </div>
     </div>
