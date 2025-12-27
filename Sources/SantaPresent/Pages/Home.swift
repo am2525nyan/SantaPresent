@@ -62,9 +62,13 @@ struct Home: StaticPage {
         CustomAction("""
             event.preventDefault();
 
+            console.log('Form submitted!');
+
             // フォームデータを取得
-            const name = document.getElementById('name').value;
-            const present = document.getElementById('present').value;
+            const name = document.getElementById("name").value;
+            const present = document.getElementById("present").value;
+
+            console.log('Name:', name, 'Present:', present);
 
             // バックエンドAPIにPOSTリクエストを送信
             fetch('\(Config.giftsEndpoint)', {
@@ -72,18 +76,22 @@ struct Home: StaticPage {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, present })
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.json();
+            })
             .then(data => {
+                console.log('Success:', data);
                 // 成功時の処理
                 alert('サンタさんに手紙を送りました！届くといいね！');
                 // フォームをクリア
-                document.getElementById('name').value = '';
-                document.getElementById('present').value = '';
+                document.getElementById("name").value = '';
+                document.getElementById("present").value = '';
             })
             .catch(error => {
+                console.error('Error:', error);
                 // エラー時の処理
                 alert('送信に失敗しました。もう一度試してください。');
-                console.error('Error:', error);
             });
         """)
     }
